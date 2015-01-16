@@ -1,0 +1,1025 @@
+var http = require('http'),
+https = require('https'),
+fs = require('fs'),
+qs = require('querystring'),
+crypto = require('crypto'),
+url = require("url"),
+stripe = require("stripe")("sk_live_31178jMkgYi0XlUhADmhc75o"),
+nodemailer = require('nodemailer'),
+init = require('./init'),
+test = require('./test'),
+schedule = require('node-schedule'),
+admin = require('./admin'),
+responses = require('./responses'),
+users = require('./users'),
+numbers = require('./numbers'),
+calls = require('./calls'),
+callbtn = require('./callbtn'),
+billings = require('./billings');
+
+//Job scheduler for cron tests every midnight.
+schedule.scheduleJob({
+    hour: 0,
+    minute: 0
+}, function() {
+    test.start_test('23411111111', 'cron');
+});
+
+var clone = function(obj) {
+    if (null == obj || "object" != typeof obj) return obj;
+    var copy = obj.constructor();
+    for (var attr in obj) {
+        if (obj.hasOwnProperty(attr)) copy[attr] = obj[attr];
+    }
+    return copy;
+}
+
+var api_request = function(options, data, cb) {
+    var req = https.request(options, function(res) {
+        var result = ""
+        var status = res.statusCode;
+        res.setEncoding('utf8');
+
+        res.on('data', function(chunk) {
+            result += chunk;
+        });
+
+        res.on('end', function(body) {
+            var chunk = JSON.parse(result);
+            cb(chunk);
+        });
+
+    });
+
+    req.on('error', function(e) {
+        //What should be done if there's an error? Probably means theres no network.
+        //So sending something to the client is out of the question.
+        //Maybe log in the db??
+        console.log(e);
+    });
+
+    if (data || data.length > 0)
+        req.write(data);
+    req.end();
+}
+
+
+// Site
+init.app.get('/', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/_index.html', json);
+    stream.pipe(res);
+});
+init.app.get('/docs', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/docs.html', json);
+    stream.pipe(res);
+});
+init.app.get('/docs/button', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/docs_btn.html', json);
+    stream.pipe(res);
+});
+init.app.get('/about', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/about.html', json);
+    stream.pipe(res);
+});
+init.app.get('/contact', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/contact.html', json);
+    stream.pipe(res);
+});
+init.app.get('/pricing', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/pricing.html', json);
+    stream.pipe(res);
+});
+init.app.get('/recover/:id', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+    stream.pipe(res);
+});
+init.app.post('/recover/:id', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+
+    var data = JSON.stringify({
+        password: req.body.password,
+        recovery_id: req.params.id
+    });
+
+    var temp_options = options;
+    temp_options.path = '/v1/users/update';
+    temp_options.method = 'POST';
+    temp_options.headers = {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.pre_email = true;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+                stream.pipe(res);
+            } else {
+                res.redirect('/');
+            }
+        } else {
+            json.pre_email = true;
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+            stream.pipe(res);
+        }
+    }
+
+    api_request(temp_options, data, cb);
+
+});
+
+init.app.get('/recover', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+        pre_email: true
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+    stream.pipe(res);
+});
+init.app.post('/recover', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+        post_email: true
+    }
+
+
+    var data = JSON.stringify({
+        email: req.body.email
+    });
+
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/users/recover';
+    temp_options.method = 'POST';
+    temp_options.headers = {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.post_email = false;
+                json.pre_email = true;
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+                stream.pipe(res);
+            } else {
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+                stream.pipe(res);
+            }
+        } else {
+            json.post_email = false;
+            json.pre_email = true;
+            json.error = 'There has been an internal error. Please try again later.';
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/recover.html', json);
+            stream.pipe(res);
+        }
+    }
+
+    api_request(temp_options, data, cb);
+});
+init.app.get('/status', function(req, res) {
+
+    var json = {
+        date: new Date().getFullYear(),
+        more: false,
+        history: [],
+    }
+
+    var start_day = new Date();
+    start_day.setHours(0);
+    start_day.setMinutes(0);
+    start_day.setSeconds(0);
+    start_day.setDate(start_day.getDate() - 7);
+
+    var end_day = new Date();
+    end_day.setHours(0);
+    end_day.setMinutes(0);
+    end_day.setSeconds(0);
+    end_day.setDate(end_day.getDate() + 1);
+
+    new init.mongodb.Collection(init.client, 'status_logs').find({
+        date: {
+            $lte: end_day,
+            $gte: start_day
+        },
+        type: 'all'
+    }).limit(7).toArray(function(err, docs) {
+        if (!err && docs.length) {
+            json.more = true;
+        }
+        for (var i = 0; i < docs.length; i++) {
+            json.history.unshift({
+                date: docs[i].date.toDateString(),
+                text: docs[i].status ? "All APIs were up" : " Some APIs were down",
+            })
+        }
+
+        var stream = init.mu.compileAndRender(__dirname + '/public_html/status.html', json);
+        stream.pipe(res);
+    });
+
+});
+init.app.get('/terms', function(req, res) {
+    var json = {
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/terms.html', json);
+    stream.pipe(res);
+});
+
+
+init.app.get('/signup', function(req, res) {
+    if (req.session.uid)
+        res.redirect('/accounts/home');
+
+    var json = {
+        date: new Date().getFullYear(),
+    }
+
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/signup.html', json);
+    stream.pipe(res);
+});
+init.app.get('/login', function(req, res) {
+    if (req.session.uid)
+        res.redirect('/accounts/home');
+
+    var json = {
+        date: new Date().getFullYear()
+    }
+
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/login.html', json);
+    stream.pipe(res);
+});
+init.app.post('/signup', function(req, res) {
+    var json = {
+        date: new Date().getFullYear()
+    }
+
+    // validate email
+    var email = req.body.email.toLowerCase().trim();
+    var password = req.body.password;
+    if (!email.match(/^[\w\.\-]+@[\w\.\-]+\.[\w]+$/)) {
+        json.error = 'Invalid email.';
+        var stream = init.mu.compileAndRender(__dirname + '/public_html/signup.html', json);
+        stream.pipe(res);
+    } else {
+        new init.mongodb.Collection(init.client, 'invites').findOne({
+            email: email
+        }, function(err, doc) {
+            if (err) {
+                json.error = 'There has been an internal error. Please try again later.';
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/signup.html', json);
+                stream.pipe(res);
+            } else {
+                if (doc) {
+                    json.error = 'Your email is already in the invite list. We will get in touch with you soon.';
+                    var stream = init.mu.compileAndRender(__dirname + '/public_html/signup.html', json);
+                    stream.pipe(res);
+                } else {
+                    new init.mongodb.Collection(init.client, 'invites').insert({
+                        email: email,
+                        date: new Date()
+                    }, {
+                        w: 1
+                    }, function(err, result) {
+                        json.success = "true";
+                        var stream = init.mu.compileAndRender(__dirname + '/public_html/signup.html', json);
+                        stream.pipe(res);
+                    });
+                }
+            }
+        });
+    }
+});
+init.app.get('/accept', function(req, res) {
+    if (req.session.uid) {
+        res.redirect('/accounts/home');
+        return;
+    }
+
+    var json = {
+        date: new Date().getFullYear(),
+    }
+
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/accept.html', json);
+    stream.pipe(res);
+});
+init.app.post('/accept', function(req, res) {
+    var json = {
+        date: new Date().getFullYear()
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var data = JSON.stringify({
+        email: email,
+        password: password
+    });
+
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/users/register';
+    temp_options.method = 'POST';
+    temp_options.headers = {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/accept.html', json);
+                stream.pipe(res);
+            } else {
+                var reg_date = chunk.date;
+                req.session.uid = chunk.id;
+                req.session.email = chunk.email;
+                req.session.auth_id = chunk.auth_id;
+                req.session.auth_secret = chunk.auth_secret;
+                req.session.balance = chunk.balance;
+                req.session.reg_date = Math.round(new Date(reg_date).getTime() / 1000);
+                res.redirect('/accounts/home');
+            }
+        } else {
+            json.error = 'There has been an internal error. Please try again later.';
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/accept.html', json);
+            stream.pipe(res);
+        }
+    }
+
+    new init.mongodb.Collection(init.client, 'accepted').findOne({
+        email: email
+    }, function(err, doc) {
+        if (err) {
+            json.error = 'There has been an internal error. Please try again later.';
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/accept.html', json);
+            stream.pipe(res);
+        } else {
+            if (doc) {
+                api_request(temp_options, data, cb);
+            } else {
+                json.error = 'This email is not in the accepted invite list. Please use the email you requested the invite with.';
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/accept.html', json);
+                stream.pipe(res);
+            }
+        }
+    });
+});
+init.app.post('/login', function(req, res) {
+    var json = {
+        date: new Date().getFullYear()
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+
+    var data = JSON.stringify({
+        email: email,
+        password: password
+    });
+
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/users/login';
+    temp_options.method = 'POST';
+    temp_options.headers = {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/login.html', json);
+                stream.pipe(res);
+            } else {
+                var reg_date = chunk.date;
+                req.session.uid = chunk.success.id;
+                req.session.email = chunk.success.email;
+                req.session.auth_id = chunk.success.auth_id;
+                req.session.auth_secret = chunk.success.auth_secret;
+                req.session.balance = chunk.success.balance;
+                req.session.reg_date = Math.round(new Date(reg_date).getTime() / 1000);
+                res.redirect('/accounts/home');
+            }
+        } else {
+            json.error = 'There has been an internal error. Please try again later.';
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/login.html', json);
+            stream.pipe(res);
+        }
+    }
+    api_request(temp_options, data, cb);
+});
+init.app.get('/accounts/home', function(req, res) {
+    var json = {
+        title: 'Welcome',
+        email: req.session.email,
+        auth_id: req.session.auth_id,
+        auth_secret: req.session.auth_secret,
+        balance: req.session.balance,
+        endpoint_username: req.session.endpoint_username,
+        endpoint_password: req.session.endpoint_password,
+        endpoint_token: req.session.endpoint_token,
+        created_at: req.session.reg_date,
+        date: new Date().getFullYear(),
+    }
+
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/home.html', json);
+    stream.pipe(res);
+});
+init.app.get('/accounts/numbers/available', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/numbers_available.html', json);
+    stream.pipe(res);
+});
+init.app.get('/accounts/fund', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/fund.html', json);
+    stream.pipe(res);
+});
+init.app.post('/accounts/fund', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+
+    var stripeToken = req.body.stripeToken;
+    var amount = req.body.amount * 100;
+
+    var charge = stripe.charges.create({
+        amount: amount, // amount in kobo
+        currency: "ngn",
+        card: stripeToken,
+        description: "Funding fonenode account"
+    }, function(err, charge) {
+        if (err) {
+            json.error = err.message;
+            json.not_funded = true;
+
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/fund.html', json);
+            stream.pipe(res);
+        } else {
+            new init.mongodb.Collection(init.client, 'users').update({
+                _id: new init.mongoid(req.session.uid)
+            }, {
+                $inc: {
+                    balance: +(amount / 100)
+                }
+            }, {
+                w: 1
+            }, function(err, result) {
+                if (!err) {
+                    json.success = 'Successfully funded your account';
+                    json.funded = true;
+                    req.session.balance += (amount / 100);
+                    json.balance = req.session.balance;
+
+                    var stream = init.mu.compileAndRender(__dirname + '/public_html/fund.html', json);
+                    stream.pipe(res);
+                } else {
+                    //fallback when a db error occurs and a customer has been charged. What to do?
+                    json.not_funded = true;
+                    json.error = 'Sorry there has been an internal error. Your card has been charged and your new balance would reflect shortly.';
+                }
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/fund.html', json);
+                stream.pipe(res);
+            });
+        }
+    });
+});
+init.app.get('/accounts/graph', function(req, res) {
+    days = req.query.days;
+    result = [];
+
+
+    end_day = new Date();
+    end_day.setHours(0);
+    end_day.setMinutes(0);
+
+    start_day = new Date();
+    start_day.setHours(0);
+    start_day.setMinutes(0);
+    start_day.setDate(start_day.getDate() - days);
+
+    query = {
+        user: new init.mongoid(req.session.uid),
+        date: {
+            $gte: start_day,
+            $lte: end_day
+        }
+    };
+
+    for (var i = 0; i < days; i++) {
+        var date = new Date();
+        date.setHours(0);
+        date.setMinutes(0);
+        date.setDate(date.getDate() - i);
+        result.push({
+            inbound: 0,
+            outbound: 0,
+            date: date,
+        });
+    }
+
+
+    new init.mongodb.Collection(init.client, 'calls').find(query).toArray(function(err, docs) {
+        if (!err) {
+            for (var i = 0; i < docs.length; i++) {
+                for (var j = 0; j < result.length; j++) {
+                    if (result[j].date.toDateString() == docs[i].date.toDateString()) {
+                        //console.log(docs[i]);
+                        if (docs[i].type == "inbound") {
+                            result[j].inbound++;
+                        }
+                        if (docs[i].type == "outbound") {
+                            result[j].outbound++;
+                        }
+                    }
+                }
+            }
+            res.send(200, result);
+        }
+    });
+
+
+
+});
+init.app.get('/accounts/reports', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+
+    var offset = req.query.offset ? req.query.offset : 0;
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/calls?offset=' + offset;
+    temp_options.auth = req.session.auth_id + ':' + req.session.auth_secret;
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/reports.html', json);
+                stream.pipe(res);
+            } else {
+                var resp = chunk;
+                if (resp.data) {
+                    json.calls = resp.data.length > 0 ? true : false;
+
+                    // Format date
+                    for (var i = 0; i < resp.data.length; i++) {
+                        var d = new Date(resp.data[i].date);
+                        resp.data[i].date = d.toDateString();
+                    }
+                    json.data = resp.data;
+                }
+
+                var offset = parseInt(resp.offset);
+                json.offset = offset;
+                if (offset > 0)
+                    json.previous_offset = offset - 20;
+
+                offset += 20;
+                if (offset < parseInt(resp.total))
+                    json.next_offset = offset;
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/reports.html', json);
+                stream.pipe(res);
+            }
+        } else {
+            //console.log(e);
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/reports.html', json);
+            stream.pipe(res);
+        }
+    }
+
+    api_request(temp_options, '', cb);
+});
+init.app.get('/accounts/numbers', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+
+    var offset = req.query.offset ? req.query.offset : 0;
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/numbers';
+    temp_options.auth = req.session.auth_id + ':' + req.session.auth_secret;
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/reports.html', json);
+                stream.pipe(res);
+            } else {
+                var resp = chunk;
+                if (resp.data) {
+                    json.numbers = resp.data.length > 0 ? true : false;
+
+                    // Format date
+                    for (var i = 0; i < resp.data.length; i++) {
+                        var d = new Date(resp.data[i].expires);
+                        resp.data[i].expires = d.toDateString();
+                    }
+                    json.data = resp.data;
+                }
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/numbers.html', json);
+                stream.pipe(res);
+
+            }
+        } else {
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/numbers.html', json);
+            stream.pipe(res);
+        }
+    }
+    api_request(temp_options, '', cb);
+});
+init.app.get('/accounts/billing', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/billing';
+    temp_options.auth = req.session.auth_id + ':' + req.session.auth_secret;
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/reports.html', json);
+                stream.pipe(res);
+            } else {
+                var resp = chunk;
+                if (resp.data) {
+                    json.billing = resp.data.length > 0 ? true : false;
+
+                    for (var i = 0; i < resp.data.length; i++) {
+                        var d = new Date(resp.data[i].date);
+                        resp.data[i].date = d.toDateString();
+                    }
+                    json.data = resp.data;
+                }
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/billing.html', json);
+                stream.pipe(res);
+            }
+        } else {
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/billing.html', json);
+            stream.pipe(res);
+        }
+    }
+    api_request(temp_options, '', cb);
+});
+init.app.get('/accounts/responses/:id', function(req, res) {
+    var id = req.params.id;
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+
+    if (req.query._method == 'delete') {
+        var temp_options = clone(init.options);
+        temp_options.path = '/v1/responses/' + id + '?_method=delete';
+        temp_options.auth = req.session.auth_id + ':' + req.session.auth_secret;
+        temp_options.method = 'POST';
+
+        var cb = function(chunk) {
+            if (chunk) {
+                if (chunk.error) {
+                    req.session.error = 'There has been an error deleting the response, try again later.';
+                } else {
+                    req.session.success = 'Response deleted';
+                }
+            } else {
+                req.session.error = 'There has been an error deleting the response, try again later.';
+            }
+            res.redirect('/accounts/responses');
+            return;
+        }
+        api_request(temp_options, '', cb);
+        return;
+    }
+
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/responses/' + id;
+    temp_options.auth = req.session.auth_id + ':' + req.session.auth_secret;
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/response.html', json);
+                stream.pipe(res);
+            } else {
+                var resp = chunk;
+                if (resp.id) {
+                    var d = new Date(resp.date);
+                    resp.date = d.toDateString();
+                    if (resp.choices) {
+                        resp.choices_exist = 1;
+                    }
+                    // merge
+                    for (var i in resp) {
+                        json[i] = resp[i];
+                    }
+                }
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/response.html', json);
+                stream.pipe(res);
+            }
+        } else {
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/response.html', json);
+            stream.pipe(res);
+        }
+    }
+    api_request(temp_options, '', cb);
+});
+init.app.get('/accounts/responses', function(req, res) {
+    var json = {
+        title: 'Responses',
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+
+    if (req.session.error) {
+        json.error = req.session.error;
+        delete req.session.error;
+    }
+    if (req.session.success) {
+        json.success = req.session.success;
+        delete req.session.success;
+    }
+
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/responses';
+    temp_options.auth = req.session.auth_id + ':' + req.session.auth_secret;
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                //console.log(e);
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/responses.html', json);
+                stream.pipe(res);
+            } else {
+                var resp = chunk;
+                if (resp.data) {
+                    json.response = resp.data.length > 0 ? true : false;
+
+                    // Format date
+                    for (var i = 0; i < resp.data.length; i++) {
+                        var d = new Date(resp.data[i].date);
+                        resp.data[i].date = d.toDateString();
+                    }
+                    json.data = resp.data;
+                }
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/responses.html', json);
+                stream.pipe(res);
+            }
+        } else {
+            //console.log(e);
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/responses.html', json);
+            stream.pipe(res);
+        }
+    }
+
+    api_request(temp_options, '', cb);
+});
+init.app.get('/accounts/logout', function(req, res) {
+    req.session.reset();
+    res.redirect('/');
+});
+init.app.get('/accounts/settings', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+    }
+
+    var stream = init.mu.compileAndRender(__dirname + '/public_html/settings.html', json);
+    stream.pipe(res);
+});
+init.app.post('/accounts/settings', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        title: 'Settings',
+        date: new Date().getFullYear(),
+    }
+
+    var data = JSON.stringify({
+        current_password: req.body.current_password,
+        new_password: req.body.new_password
+    });
+
+    var temp_options = clone(init.options);
+    temp_options.path = '/v1/users/update';
+    temp_options.method = 'POST';
+    temp_options.headers = {
+        'Content-Type': 'application/json',
+        'Content-Length': data.length
+    }
+
+    var cb = function(chunk) {
+        if (chunk) {
+            if (chunk.error) {
+                json.error = chunk.error;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/settings.html', json);
+                stream.pipe(res);
+            } else {
+                json.success = chunk.success;
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/settings.html', json);
+                stream.pipe(res);
+            }
+        } else {
+            json.error = 'There has been an internal error. Please try again later.';
+            var stream = init.mu.compileAndRender(__dirname + '/public_html/settings.html', json);
+            stream.pipe(res);
+        }
+    }
+    api_request(temp_options, data, cb);
+});
+init.app.post('/accounts/settings/button', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear(),
+        endpoint_username: req.session.endpoint_username,
+        endpoint_token: req.session.endpoint_token
+    }
+
+    var number = req.body.number;
+    if (!number) {
+        json.error = 'Kindly enter the number you want to receive calls on';
+        var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+        stream.pipe(res);
+        return;
+    }
+
+    // Strip non numeric digits
+    number = number.replace(/[^\d]/g, '');
+    if (number.length < 3) {
+        json.error = 'Kindly enter a valid number';
+        var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+        stream.pipe(res);
+        return;
+    }
+    // Remove prefix 0
+    if (number.match(/^0/))
+        number = number.substring(1);
+    // Prefix with 234
+    if (!number.match(/^234/))
+        number = '234' + number;
+
+    new init.mongodb.Collection(init.client, 'users').update({
+        _id: new init.mongoid(req.session.uid)
+    }, {
+        $set: {
+            endpoint_number: number
+        }
+    }, {
+        w: 1
+    }, function(err, result) {
+        json.success = 'Number successfully updated';
+        json.endpoint_number = req.session.endpoint_number = number;
+
+        var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+        stream.pipe(res);
+        return;
+    });
+});
+init.app.get('/accounts/settings/button', function(req, res) {
+    var json = {
+        balance: req.session.balance,
+        date: new Date().getFullYear()
+    }
+
+    new init.mongodb.Collection(init.client, 'users').findOne({
+        _id: new init.mongoid(req.session.uid)
+    }, function(err, doc) {
+        if (err) {
+            json.error = 'There has been an internal error. Please try again later.';
+            // todo
+            // log
+        } else {
+            if (!doc.endpoint_username) {
+                // Register endpoint
+                var username = doc.email.match(/^(.+)@/)[1];
+                username = username.replace(/[^\w]/g, '');
+                var data = JSON.stringify({
+                    username: username,
+                    password: doc.password,
+                    alias: username,
+                    app_id: '26644271839460965'
+                });
+
+                var temp_options = {
+                    host: 'api.plivo.com',
+                    path: '/v1/Account/' + auth_id + '/Endpoint/',
+                    method: 'POST',
+                    auth: auth_id + ':' + auth_token,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Content-Length': data.length
+                    }
+                };
+                var cb = function(chunk) {
+                    if (chunk) {
+                        if (chunk.error) {
+                            json.error = 'You did not enter your current password.';
+                            var stream = init.mu.compileAndRender(__dirname + '/public_html/settings.html', json);
+                            stream.pipe(res);
+                        } else {
+                            var failed = false;
+                            if (status == 200 || status == 201) {
+                                var j = chunk;
+                                username = j.username;
+                                if (!username)
+                                    failed = true;
+                                else {
+                                    var endpoint_token = crypto.createHash('md5').update(username + ':phone.plivo.com:' + doc.password).digest("hex");
+                                    var query = {
+                                        endpoint_username: username,
+                                        endpoint_token: endpoint_token
+                                    };
+                                    new init.mongodb.Collection(init.client, 'users').update({
+                                        _id: new init.mongoid(req.session.uid)
+                                    }, {
+                                        $set: query
+                                    }, {
+                                        w: 1
+                                    }, function(err, doc) {
+                                        if (err) {
+                                            // log
+                                            json.error = 'There has been an internal error. Please try again later.';
+                                        } else {
+                                            req.session.endpoint_username = json.endpoint_username = username;
+                                            req.session.endpoint_token = json.endpoint_token = endpoint_token;
+                                        }
+
+                                        var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+                                        stream.pipe(res);
+                                    });
+                                }
+                            } else {
+                                //console.log(result);
+                                failed = true;
+                            }
+
+                            if (failed) {
+                                json.error = 'There has been an internal error. Please try again later.';
+                                var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+                                stream.pipe(res);
+                            }
+
+                        }
+                    } else {
+                        json.error = 'There has been an internal error. Please try again later.';
+                        var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+                        stream.pipe(res);
+                    }
+                }
+                api_request(temp_options, data, cb);
+            } else {
+                json.endpoint_username = req.session.endpoint_username = doc.endpoint_username;
+                json.endpoint_token = req.session.endpoint_token = doc.endpoint_token;
+                json.endpoint_number = req.session.endpoint_number = doc.endpoint_number;
+
+                var stream = init.mu.compileAndRender(__dirname + '/public_html/button.html', json);
+                stream.pipe(res);
+            }
+        }
+    });
+});

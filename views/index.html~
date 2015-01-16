@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+
+    <link rel="stylesheet" href="css/reset.css">
+    <!-- CSS reset -->
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Resource style -->
+    <title>CORI -- Home</title>
+</head>
+
+<body>
+    <header>
+        <h1>CORI</h1>
+        <div class="nav">
+            <a href="#">Home</a>
+        </div>
+    </header>
+    <section class="cd-faq">
+        <div class="question-wrapper">
+            <div class="question" href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae quidem blanditiis delectus corporis, possimus officia sint sequi e x tenetur id impedit est pariatur iure animi non a ratione reiciendis nihil sed consequatur atque repellendus fugit perspiciatis rerum et. Dolorum consequuntur fugit deleniti, soluta fuga nobis. ?
+            </div>
+            <div class="answer">
+                <a href="#" class="btn">Yes<a/>&nbsp; <a href="#" class="btn">No<a/> &nbsp;<a href="#" class="btn">Not sure<a/>
+	    </div>
+	</div> 
+</section> <!-- cd-faq -->
+<script src="js/jquery-2.1.1.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $.get('/questions', function(data) {
+        console.log(data);
+
+    })
+});
+</script>
+
+</body>
+</html>

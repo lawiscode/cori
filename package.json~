@@ -1,0 +1,18 @@
+{
+  "name": "CORI",
+  "version": "0.0.0",
+  "description": "Criminal Offender Record Information",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zim Ezeozue",
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.10.1",
+    "client-sessions": "^0.7.0",
+    "express": "~3.4.8",
+    "mongodb": "^1.4.28",
+    "mu2": "^0.5.20"
+  }
+}
