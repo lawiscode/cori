@@ -27,39 +27,25 @@
 			    <h2 class="masthead-brand">CORI</h3>
 				<nav>
 				    <ul class="nav masthead-nav">
-					<li class="active"><a href="/">Home</a></li>
-					<li><a href="/more">More info</a></li>
+					<li><a href="/">Home</a></li>
+					<li class="active"><a href="/more">More info</a></li>
 				    </ul>
 				</nav>
 			</div>
 		    </div>
 		    <div class="inner cover">
+			<ul>
+			    <li><a href="http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf">Affidavit of indigency</a></li>
+			    <li><a href="http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf">CORI Request form</a></li>
+			    <li><a href="http://www.mass.gov/courts/docs/forms/district/motion-to-seal-record.pdf">Seal CORI (By Court)</a></li>
+			    <li><a href="http://www.mass.gov/courts/docs/probation/sealingpetition.pdf">Seal CORI (By Mail)</a></li>
 
-			<p class="question lead"></p>
-			<p class="options lead"></p>
+			</ul>
 		    </div>
 		    <script type="text/javascript">
-		     var json = [];
-
-
-		     function nextQuestion(id) {
-			 $('.question').html(json[id].question);
-			 $('.options').empty();
-			 for (var i = 0; i < json[id].options.length; i++) {
-			     $('.options').append('<a class="btn" href="#" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
-			 }
-			 $('.btn').click(function() {
-			     console.log($(this).data('id'));
-			     nextQuestion($(this).data('id'));
-			 });
-
-		     }
 
 		     $(document).ready(function() {
-			 $.getJSON('/qna', function(data) {
-			     json = data;
-			     nextQuestion(0);
-			 });
+
 		     });
 		    </script>
 
