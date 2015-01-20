@@ -3,15 +3,14 @@
     <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
-
-	<link rel="stylesheet" href="css/reset.css">
-	<!-- CSS reset -->
+	<link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.min.css' rel='stylesheet' type='text/css'>
+	<link href='css/datepicker.css' rel='stylesheet' type='text/css'>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
 	<link rel="stylesheet" href="css/style.css">
-	<!-- Resource style -->
 	<title>CORI -- Home</title>
     </head>
     <body>
@@ -37,16 +36,27 @@
 
 			<p class="question lead"></p>
 			<p class="options lead"></p>
+			<input class="datepicker" style="display:none">
 		    </div>
 		    <script type="text/javascript">
 		     var json = [];
-
+		     var dates = {};
+		     var curDate = "";
 
 		     function nextQuestion(id) {
 			 $('.question').html(json[id].question);
 			 $('.options').empty();
-			 for (var i = 0; i < json[id].options.length; i++) {
-			     $('.options').append('<a class="btn" href="#" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
+			 if (json[id].date) {
+			     curDate = json[id].date;
+			     $('.datepicker').show();
+			     $('.options').append('<a class="btn" href="#" style="display:none" data-id="' + json[id].options[0].next + '">' + json[id].options[0].answer + '</a>');
+			 }
+			 else {
+			     $('.datepicker').hide();
+			     for (var i = 0; i < json[id].options.length; i++) {
+				 $('.options').append('<a class="btn" href="#" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
+			     }
+
 			 }
 			 $('.btn').click(function() {
 			     console.log($(this).data('id'));
@@ -56,6 +66,18 @@
 		     }
 
 		     $(document).ready(function() {
+			 $('.datepicker').prop('readOnly', true); 
+			 $('.datepicker').datepicker().on('changeDate', function(ev){
+			     if (ev.date.valueOf()){
+				 var dateArray = ev.date.valueOf().split('/');
+				 dates[curDate] = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
+				 
+				 $('.btn').show();
+			     }
+			     else {
+				 $('.btn').hide();
+			     }
+			 });
 			 $.getJSON('/qna', function(data) {
 			     json = data;
 			     nextQuestion(0);

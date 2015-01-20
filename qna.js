@@ -9,9 +9,10 @@ exports.data = [
 	    },
 	    {
 		answer: "No",
-		next: 1111,
+		next: 100,
 	    },
-	]
+	],
+	date: 'firstTime'
     },
 
     {
@@ -98,7 +99,7 @@ exports.data = [
 	id: 5,
 	options: [
 	    {
-		answer: "Date x",
+		answer: "Continue",
 		next: 7,
 	    },
 
@@ -141,7 +142,7 @@ exports.data = [
 	options: [
 
 	    {
-		answer: "Date Y",
+		answer: "Continue",
 		next: 9,
 	    },
 	]
@@ -170,7 +171,7 @@ exports.data = [
 	options: [
 
 	    {
-		answer: "Date Z",
+		answer: "Continue",
 		next: 11,
 	    },
 	]
@@ -195,7 +196,7 @@ exports.data = [
 	options: [
 
 	    {
-		answer: "Date Q",
+		answer: "Continue",
 		next: 13,
 	    },
 	]
@@ -230,5 +231,49 @@ exports.data = [
 
 	]
     },
-
+    {
+	question: "Do you have any felony cases that ended in non-convictions?",
+	id: 15,
+	options: [
+	    {
+		answer: "Yes, I have felony  non-convictions that ended more than 10 years ago.",
+		next: 16,
+	    },
+	    {
+		answer: "Yes, I have both felony non-convictions that ended more than 10 years ago AND felony non-convictions that ended within the past 10 years.",
+		next: 16,
+	    },
+	    {
+		answer: "No, I do not have any non-convictions that ended more than 10 years ago.",
+		next: 16,
+	    },
+	]
+    },
+    {
+	question: "Do you have any misdemeanor cases that ended in non-convictions?",
+	id: 16,
+	options: [
+	    {
+		answer: "Yes, I have felony  non-convictions that ended more than 5 years ago.",
+		next: 16,
+	    },
+	    {
+		answer: "Yes, I have both misdemeanor non-convictions that ended more than 5 years ago AND misdemeanor non-convictions that ended within the past 5 years.",
+		next: 16,
+	    },
+	    {
+		answer: "No, I do not have any non-convictions that ended more than 5 years ago.",
+		next: 16,
+	    }],
+    },
+    {
+	question: "Certain crimes may never be sealed if they end in conviction.  Some of the more common never sealable charges are witness intimidation, resisting arrest, bribery, and certain firearms charges. If the waiting periods have been met, other charges will still be able to sealed by mail, but not these charges",
+	id: 17,
+	options: [
+	    {
+		answer: "I understand",
+		next: 18,
+	    },
+	]
+    },
 ]
