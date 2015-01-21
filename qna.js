@@ -117,7 +117,7 @@ exports.data = [
 
 
     {
-	question: "When did you plead guilty or when were you found guilty of your most recent felony conviction? Please include the month, day, and year to the best of your ability.",
+	question: "When did you plead guilty or when were you found guilty of your most recent felony conviction? Please include the month, day, and year to the best of your ability or by referring to your CORI report.",
 	id: 8,
 	options: [
 	    {
@@ -215,7 +215,7 @@ exports.data = [
 	]
     },
     {
-	question: "When were you released from jail most recently for a misdemeanor conviction? For instance, if you served jail time for a misdemeanor twenty years ago, and again for a misdemeanor four years ago, enter the date you were most recently released from jail for a misdemeanor conviction. Please include the month, day, and year to the best of your ability.",
+	question: "When were you released from jail most recently for a misdemeanor conviction? For instance, if you served jail time for a misdemeanor twenty years ago, and again for a misdemeanor four years ago, enter the date you were most recently released from jail for a misdemeanor conviction. Please include the month, day, and year to the best of your ability or by referring to your CORI report.",
 	id: 15,
 	options: [
 
