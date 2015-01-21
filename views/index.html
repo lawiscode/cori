@@ -34,7 +34,7 @@
 			</div>
 		    </div>
 		    <div class="inner cover">
-			<div style="padding-bottom:60px;"><a id="back" class="pull-left" href="#" style="display:none;"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size: 25px;"></span></a></div>
+			<div style="padding-bottom:50px;"><a id="back" class="pull-left" href="#" style="display:none;"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size: 25px;"></span></a></div>
 			<p class="question lead"></p>
 			<p class="options lead"></p>
 			<input class="datepicker" style="display:none">
@@ -52,7 +52,7 @@
 		     var salientAs = {};
 		     //user tree history
 		     var hist = [];
-		     
+
 		     //These variables are used in the calculation of eligibility
 		     var conviction = false;
 		     var nonConviction = false;
@@ -67,7 +67,7 @@
 			 if (json[id].date) {
 			     curDate = json[id].date;
 			     //for back button.
-			     dates[curDate] = undefined;
+					       dates[curDate] = undefined;
 			     $('.datepicker').show();
 			     $('.options').append('<a class="btn" href="#" style="display:none" data-id="' + json[id].options[0].next + '">' + json[id].options[0].answer + '</a>');
 			 }
@@ -166,7 +166,7 @@
 
 		     }
 
-		     //Store answer to importat calculations that would be used in 
+		     //Store answer to importat calculations that would be used in
 		     //eligibility question
 		     function getAnswer(id, ans) {
 			 //If called without an answer, delete any possible previous value
