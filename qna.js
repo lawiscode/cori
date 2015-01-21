@@ -129,7 +129,7 @@ exports.data = [
     },
 
     {
-	question: "Did you serve jail time for this convistion or any felony conviction?",
+	question: "Did you serve jail time for this conviction or any felony conviction?",
 	id: 9,
 	options: [
 	    {
