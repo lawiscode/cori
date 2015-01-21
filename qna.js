@@ -1,8 +1,6 @@
-exports.data = [
-
-    {
-	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process.  Non-convictions may also be eligible for sealing by a judge.  Please visit http://www.masslegalhelp.org/ to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
-	id: 0,
+exports.data = {
+    '0': {
+	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process.  Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
 	options: [
 	    {
 		answer: "I understand",
@@ -11,9 +9,8 @@ exports.data = [
 	]
     },
 
-    {
-	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 16, 2013. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf ",
-	id: 1,
+    '1': {
+	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 16, 2013. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal access form</a> and <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of indigency</a> ",
 	options: [
 	    {
 		answer: "Continue",
@@ -22,9 +19,8 @@ exports.data = [
 	]
     },
 
-    {
+    '2': {
 	question: "Are you a US citizen?",
-	id: 2,
 	options: [
 	    {
 		answer: "Yes",
@@ -37,9 +33,8 @@ exports.data = [
 	],
     },
 
-    {
+    '3': {
 	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or have to court again on your case in the future, your case is still open.",
-	id: 3,
 	options: [
 	    {
 		answer: "No",
@@ -52,10 +47,8 @@ exports.data = [
 	]
     },
 
-
-    {
+    '4': {
 	question: "Are you presently registered, or have you ever had to register as a sex offender?",
-	id: 4,
 	options: [
 	    {
 		answer: "No",
@@ -71,9 +64,9 @@ exports.data = [
 	    },
 	]
     },
-    {
+
+    '5': {
 	question: "Are the cases you want to seal from the District Court, Superior Court, or Boston Municipal Court in MASSACHUSETTS?",
-	id: 5,
 	options: [
 	    {
 		answer: "Yes",
@@ -85,10 +78,8 @@ exports.data = [
 	    },
 	]
     },
-
-    {
+    '6': {
 	question: "Are the cases in Federal Court?",
-	id: 6,
 	options: [
 	    {
 		answer: "No",
@@ -100,9 +91,9 @@ exports.data = [
 	    },
 	]
     },
-    {
+
+    '7': {
 	question: "Do you have any felony convictions?",
-	id: 7,
 	options: [
 	    {
 		answer: "Yes",
@@ -114,11 +105,8 @@ exports.data = [
 	    },
 	]
     },
-
-
-    {
+    '8': {
 	question: "When did you plead guilty or when were you found guilty of your most recent felony conviction? Please include the month, day, and year to the best of your ability.",
-	id: 8,
 	options: [
 	    {
 		answer: "Continue",
@@ -127,10 +115,8 @@ exports.data = [
 	],
 	date: 'felCon',
     },
-
-    {
-	question: "Did you serve jail time for this convistion or any felony conviction?",
-	id: 9,
+    '9': {
+	question: "Did you serve jail time for this conviction or any felony conviction?",
 	options: [
 	    {
 		answer: "Yes",
@@ -142,10 +128,8 @@ exports.data = [
 	    },
 	]
     },
-
-    {
+    '10': {
 	question: "Do you have any felony convictions?",
-	id: 10,
 	options: [
 	    {
 		answer: "Yes",
@@ -157,24 +141,20 @@ exports.data = [
 	    },
 	]
     },
-
-    {
+    '11': {
 	question: "When were you released from jail most recently?  For instance, if you served jail time for a felony 20 years ago, and again for a felony ten years ago,enter the date you were released most recently for a felony conviction. Please include the month, day, and year to the best of your ability.",
-	id: 11,
 	options: [
 
 	    {
 		answer: "Continue",
-		next: 9,
+		next: 12,
 	    },
 	],
-	date: 'jailMisCon'
+	date: 'jailFelCon'
     },
 
-
-    {
+    '12': {
 	question: "Do you have any misdemeanor convictions?",
-	id: 12,
 	options: [
 	    {
 		answer: "Yes",
@@ -186,11 +166,8 @@ exports.data = [
 	    },
 	]
     },
-
-
-    {
+    '13': {
 	question: "When did you plead guilty or when were you found guilty of your most recent misdemeanor conviction? Please include the month, day, and year to the best of your ability.",
-	id: 13,
 	options: [
 
 	    {
@@ -200,9 +177,9 @@ exports.data = [
 	],
 	date: 'misCon'
     },
-    {
+
+    '14': {
 	question: "Did you serve jail time for this conviction, or any misdemeanor conviction?",
-	id: 14,
 	options: [
 	    {
 		answer: "Yes",
@@ -214,21 +191,20 @@ exports.data = [
 	    },
 	]
     },
-    {
+    '15': {
 	question: "When were you released from jail most recently for a misdemeanor conviction? For instance, if you served jail time for a misdemeanor twenty years ago, and again for a misdemeanor four years ago, enter the date you were most recently released from jail for a misdemeanor conviction. Please include the month, day, and year to the best of your ability.",
-	id: 15,
 	options: [
 
 	    {
 		answer: "Continue",
-		next: 13,
+		next: 16,
 	    },
 	],
-	date: 'jailFelCon'
+	date: 'jailMisCon'
     },
-    {
+
+    '16': {
 	question: "Do you have any convictions in other states or federally within the past ten years?",
-	id: 16,
 	options: [
 	    {
 		answer: "Yes",
@@ -240,10 +216,8 @@ exports.data = [
 	    },
 	]
     },
-
-    {
+    '17': {
 	question: "If a misdemeanor, was it within the past five years?  If a felony, was it within the past ten years?  Do not include minor motor vehicle offenses with a fine of less than $50, which do not count for purposes of sealing records.",
-	id:17,
 	options: [
 	    {
 		answer: "No, I have not had a misdemeanor conviction within the past 5 years, or a felony conviction within the past 10 years, in any other state. ",
@@ -256,23 +230,8 @@ exports.data = [
 
 	]
     },
-    {
+    '18': {
 	question: "Do you have any felony cases that ended in non-convictions?",
-	id: 18,
-	options: [
-	    {
-		answer: "Yes",
-		next: 26,
-	    },
-	    {
-		answer: "No",
-		next: 19,
-	    }
-	]
-    },
-    {
-	question: "Do you have any misdemeanor cases that ended in non-convictions?",
-	id: 19,
 	options: [
 	    {
 		answer: "Yes",
@@ -280,13 +239,26 @@ exports.data = [
 	    },
 	    {
 		answer: "No",
+		next: 19,
+	    }
+	]
+    },
+
+    '19': {
+	question: "Do you have any misdemeanor cases that ended in non-convictions?",
+	options: [
+	    {
+		answer: "Yes",
+		next: 28,
+	    },
+	    {
+		answer: "No",
 		next: 20,
 	    }
 	],
     },
-    {
+    '20': {
 	question: "Certain crimes may never be sealed if they end in conviction.  Some of the more common never sealable charges are witness intimidation, resisting arrest, bribery, and certain firearms charges. If the waiting periods have been met, other charges will still be able to sealed by mail, but not these charges",
-	id: 20,
 	options: [
 	    {
 		answer: "I understand",
@@ -294,33 +266,26 @@ exports.data = [
 	    },
 	]
     },
-    {
-	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A. Please check back after your open cases have closed. You can also visit http://www.masslegalhelp.org for more information",
-	id: 21,
+    '21': {
+	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A. Please check back after your open cases have closed. You can also visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> ",
     },
-    {
+    '22': {
 	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A.",
-	id: 22,
     },
-    {
-	question: "Sealing records for people who were previously on the sex offender registry may be more complicated than other types of sealing. Please visit http://www.masslegalhelp.org or contact an attorney",
-	id: 23,
+    '23': {
+	question: "Sealing records for people who were previously on the sex offender registry may be more complicated than other types of sealing. Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> or contact an attorney",
     },
-    {
+    '24': {
 	question: "Your criminal record history is reviewed when you apply for a “green card”, citizenship or try to change your immigration status.  If you are not a citizen, you should talk to an immigration lawyer before sealing any records.  Otherwise, you may have to go to each court where a record is sealed to ask a judge to unseal the case so you can get papers you need for purposes of immigration. You might not get papers you need in time for an immigration hearing if the case is sealed.  Certified copies of the complaint, docket, and police report for each of your criminal cases are usually needed.",
-	id: 24,
     },
-    {
+    '25': {
 	question: "The administrative process under Mass. Gen. Law Chapter 276, Section 100A does not include sealing of cases in other states",
-	id: 25,
     },
-    {
+    '26': {
 	question: "The administrative process under Mass. Gen. Law Chapter 276, Section 100A does not include sealing of federal court cases",
-	id: 26,
     },
-    {
+    '27': {
 	question: "Did you have any felony cases that ended in Non-convictions more than 10 years ago",
-	id: 27,
 	options: [
 	    {
 		answer: "Yes",
@@ -333,9 +298,8 @@ exports.data = [
 
 	]
     },
-    {
+    '28': {
 	question: "Did you have any misdemeanor cases that ended in Non-convictions more than 5 years ago",
-	id: 28,
 	options: [
 	    {
 		answer: "Yes",
@@ -348,10 +312,9 @@ exports.data = [
 
 	]
     },
-    {
+    '29': {
 	question: "Sorry, you are not currently eligible to seal by mail. You must wait until any out of state and periods of incarceration are at least 5 years old for misdemeanors, and 10 years old for felonies.",
-	id: 29,
     },
 
 
-]
+}

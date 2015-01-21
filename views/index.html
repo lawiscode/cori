@@ -5,6 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
 	<link href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.1/css/datepicker.min.css' rel='stylesheet' type='text/css'>
 	<link href='css/datepicker.css' rel='stylesheet' type='text/css'>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -39,11 +40,20 @@
 			<input class="datepicker" style="display:none">
 		    </div>
 		    <script type="text/javascript">
-		     var json = [];
+		     //json containing all questions and options. Read from qna.js
+		     var json = {};
+		     //important dates that user enters during survey
 		     var dates = {};
+		     //helper to store 'dates'
 		     var curDate = "";
+		     //Important question numbers whose answers should be stored
+		     var salientQs = [27, 28];
+		     //Answers to salientQs
+		     var salientAs = {};
+		     //user tree history
 		     var hist = [];
-
+		     
+		     //These variables are used in the calculation of eligibility
 		     var conviction = false;
 		     var nonConviction = false;
 		     var waiting = new Date(1900, 0, 0);
@@ -53,16 +63,20 @@
 		     function nextQuestion(id) {
 			 $('.question').html(json[id].question);
 			 $('.options').empty();
+			 getAnswer($(this).data('id'));
 			 if (json[id].date) {
 			     curDate = json[id].date;
+			     //for back button.
+			     dates[curDate] = undefined;
 			     $('.datepicker').show();
 			     $('.options').append('<a class="btn" href="#" style="display:none" data-id="' + json[id].options[0].next + '">' + json[id].options[0].answer + '</a>');
 			 }
 			 else {
 			     $('.datepicker').hide();
+			     $('.datepicker').val('');
 			     if (json[id].options) {
 				 for (var i = 0; i < json[id].options.length; i++) {
-				     $('.options').append('<a class="btn" href="#" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
+				     $('.options').append('<a class="btn" href="#" data-option="' + i  + '" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
 				 }
 			     }
 
@@ -71,6 +85,9 @@
 
 			 $('.btn').click(function() {
 			     hist.push($(this).data('id'));
+			     getAnswer($(this).data('id'), $(this).data('option'));
+			     //clear curDate after updating 'dates'. Works with the back button
+			     curDate = "";
 			     nextQuestion($(this).data('id'));
 			     if (hist.length == 1) {
 				 $('#back').hide();
@@ -112,10 +129,55 @@
 			     }
 			 }
 
-			 
-			 //Was there a non conviction
-			 
-			 
+			 if (!$.isEmptyObject(salientAs)) {
+			     nonConviction = true;
+			     //Was there a non conviction
+			     mail = salientAs[27] == 0 || salientAs[28] == 0;
+			     court = salientAs[27] == 1 || salientAs[28] == 1;
+
+			 }
+
+			 if (conviction && nonConviction) {
+			     if (court && mail) {
+				 nextQuestion();
+			     }
+			     else if (court) {
+				 nextQuestion();
+			     }
+			     else if (mail) {
+				 nextQuestion();
+			     }
+			 }
+			 else if (conviction) {
+			     nextQuestion();
+			 }
+			 else if (nonConviction) {
+			     if (court && mail) {
+				 nextQuestion();
+			     }
+			     else if (court) {
+				 nextQuestion();
+			     }
+			     else if (mail) {
+				 nextQuestion();
+			     }
+			 }
+
+
+		     }
+
+		     //Store answer to importat calculations that would be used in 
+		     //eligibility question
+		     function getAnswer(id, ans) {
+			 //If called without an answer, delete any possible previous value
+			 if (!ans) {
+			     salientAs[id] = undefined;
+			     return;
+			 }
+			 //If called with an ans and id belongs to salientQs, store answer
+			 if ($.inArray(id, salientQs) > -1) {
+			     salientAs[id] = ans;
+			 }
 		     }
 
 
@@ -141,6 +203,9 @@
 			     console.log(hist);
 			     hist.pop();
 			     nextQuestion(hist[hist.length-1]);
+			     if (curDate != "") {
+				 dates[curDate] = undefined;
+			     }
 			     if (hist.length == 1) {
 				 $('#back').hide();
 			     }
