@@ -15,7 +15,6 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.static(path.join(__dirname, 'static')));
 
 app.get('/qna', function(req, res) {
-    console.log(qna);
     res.json(qna);
 });
 

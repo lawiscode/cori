@@ -33,7 +33,7 @@
 			</div>
 		    </div>
 		    <div class="inner cover">
-
+			<div style="padding-bottom:60px;"><a id="back" class="pull-left" href="#" style="display:none;"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size: 25px;"></span></a></div>
 			<p class="question lead"></p>
 			<p class="options lead"></p>
 			<input class="datepicker" style="display:none">
@@ -42,6 +42,13 @@
 		     var json = [];
 		     var dates = {};
 		     var curDate = "";
+		     var hist = [];
+
+		     var conviction = false;
+		     var nonConviction = false;
+		     var waiting = new Date(1900, 0, 0);
+		     var court = false;
+		     var mail = false;
 
 		     function nextQuestion(id) {
 			 $('.question').html(json[id].question);
@@ -53,25 +60,71 @@
 			 }
 			 else {
 			     $('.datepicker').hide();
-			     for (var i = 0; i < json[id].options.length; i++) {
-				 $('.options').append('<a class="btn" href="#" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
+			     if (json[id].options) {
+				 for (var i = 0; i < json[id].options.length; i++) {
+				     $('.options').append('<a class="btn" href="#" data-id="' + json[id].options[i].next + '">' + json[id].options[i].answer + '</a>');
+				 }
 			     }
 
-			 }
-			 $('.btn').click(function() {
-			     console.log($(this).data('id'));
-			     nextQuestion($(this).data('id'));
-			 });
 
+			 }
+
+			 $('.btn').click(function() {
+			     hist.push($(this).data('id'));
+			     nextQuestion($(this).data('id'));
+			     if (hist.length == 1) {
+				 $('#back').hide();
+			     }
+			     else {
+				 $('#back').show();
+			     }
+			 });
 		     }
 
+		     function calculate() {
+			 //Was there a conviction?
+			 conviction = dates['misCon'] || dates['jailMisCon'] || dates['felCon'] || dates['jailFelCon'];
+
+
+			 //Waiting period
+			 if (dates['misCon']) {
+			     dates['misCon'].setFullYear(dates['misCon'].getFullYear() + 5);
+			     if (dates['misCon'] > waiting) {
+				 waiting = dates['misCon'];
+			     }
+			 }
+			 if (dates['felCon']) {
+			     dates['felCon'].setFullYear(dates['felCon'].getFullYear() + 10);
+			     if (dates['felCon'] > waiting) {
+				 waiting = dates['felCon'];
+			     }
+			 }
+			 if (dates['jailMisCon']) {
+			     dates['jailMisCon'].setFullYear(dates['jailMisCon'].getFullYear() + 5);
+			     if (dates['jailMisCon'] > waiting) {
+				 waiting = dates['jailMisCon'];
+			     }
+			 }
+			 if (dates['jailFelCon']) {
+			     dates['jailFelCon'].setFullYear(dates['jailFelCon'].getFullYear() + 10);
+			     if (dates['jailFelCon'] > waiting) {
+				 waiting = dates['jailFelCon'];
+			     }
+			 }
+
+			 
+			 //Was there a non conviction
+			 
+			 
+		     }
+
+
 		     $(document).ready(function() {
-			 $('.datepicker').prop('readOnly', true); 
+			 $('.datepicker').prop('readOnly', true);
 			 $('.datepicker').datepicker().on('changeDate', function(ev){
 			     if (ev.date.valueOf()){
-				 var dateArray = ev.date.valueOf().split('/');
-				 dates[curDate] = new Date(dateArray[2], dateArray[0]-1, dateArray[1]);
-				 
+				 console.log(ev.date.valueOf());
+				 dates[curDate] = new Date(ev.date.valueOf());
 				 $('.btn').show();
 			     }
 			     else {
@@ -80,8 +133,22 @@
 			 });
 			 $.getJSON('/qna', function(data) {
 			     json = data;
+			     hist.push(0);
 			     nextQuestion(0);
 			 });
+			 $('#back').on('click', function(e) {
+			     e.preventDefault();
+			     console.log(hist);
+			     hist.pop();
+			     nextQuestion(hist[hist.length-1]);
+			     if (hist.length == 1) {
+				 $('#back').hide();
+			     }
+			     else {
+				 $('#back').show();
+			     }
+			 });
+
 		     });
 		    </script>
 
