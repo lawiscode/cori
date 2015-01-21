@@ -1,6 +1,6 @@
 exports.data = {
     '0': {
-	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process, a FREE and EASY form you will mail-in. Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
+	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process, a FREE and SIMPLE form you will mail-in. Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
 	options: [
 	    {
 		answer: "I understand",
