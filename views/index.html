@@ -28,7 +28,7 @@
 				<nav>
 				    <ul class="nav masthead-nav">
 					<li class="active"><a href="/">Home</a></li>
-					<li><a href="/more">More info</a></li>
+					<li><a href="/more">Forms</a></li>
 				    </ul>
 				</nav>
 			</div>
@@ -52,6 +52,8 @@
 		     var salientAs = {};
 		     //user tree history
 		     var hist = [];
+		     //current question id
+		     var curId = 0;
 
 		     //These variables are used in the calculation of eligibility
 		     var conviction = false;
@@ -61,9 +63,10 @@
 		     var mail = false;
 
 		     function nextQuestion(id) {
+			 curId = id;
 			 $('.question').html(json[id].question);
 			 $('.options').empty();
-			 getAnswer($(this).data('id'));
+			 getAnswer();
 			 if (json[id].date) {
 			     curDate = json[id].date;
 			     //for back button.
@@ -85,9 +88,9 @@
 
 			 $('.btn').click(function() {
 			     hist.push($(this).data('id'));
-			     getAnswer($(this).data('id'), $(this).data('option'));
 			     //clear curDate after updating 'dates'. Works with the back button
 			     curDate = "";
+			     getAnswer($(this).data('option'));
 			     nextQuestion($(this).data('id'));
 			     if (hist.length == 1) {
 				 $('#back').hide();
@@ -168,15 +171,17 @@
 
 		     //Store answer to importat calculations that would be used in
 		     //eligibility question
-		     function getAnswer(id, ans) {
+		     function getAnswer(ans) {
+			     //console.log(curId);
 			 //If called without an answer, delete any possible previous value
-			 if (!ans) {
-			     salientAs[id] = undefined;
+			 if (ans == undefined && $.inArray(curId, salientQs) > -1) {
+			     salientAs[curId] = undefined;
 			     return;
 			 }
+			 
 			 //If called with an ans and id belongs to salientQs, store answer
-			 if ($.inArray(id, salientQs) > -1) {
-			     salientAs[id] = ans;
+			 if ($.inArray(curId, salientQs) > -1) {
+			     salientAs[curId] = ans;
 			 }
 		     }
 
@@ -185,7 +190,6 @@
 			 $('.datepicker').prop('readOnly', true);
 			 $('.datepicker').datepicker().on('changeDate', function(ev){
 			     if (ev.date.valueOf()){
-				 console.log(ev.date.valueOf());
 				 dates[curDate] = new Date(ev.date.valueOf());
 				 $('.btn').show();
 			     }
@@ -200,7 +204,6 @@
 			 });
 			 $('#back').on('click', function(e) {
 			     e.preventDefault();
-			     console.log(hist);
 			     hist.pop();
 			     nextQuestion(hist[hist.length-1]);
 			     if (curDate != "") {
