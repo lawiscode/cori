@@ -34,7 +34,7 @@ exports.data = {
     },
 
     '3': {
-	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or have to court again on your case in the future, your case is still open.",
+	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or if you have to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
 	options: [
 	    {
 		answer: "No",
