@@ -1,6 +1,6 @@
 exports.data = {
     '0': {
-	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process.  Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
+	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process, a FREE and SIMPLE form you will mail-in. Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
 	options: [
 	    {
 		answer: "I understand",
@@ -10,7 +10,7 @@ exports.data = {
     },
 
     '1': {
-	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 16, 2013. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal access form</a> and <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of indigency</a> ",
+	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 16, 2013. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal access form</a> and to waive the fee, <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of indigency</a> ",
 	options: [
 	    {
 		answer: "Continue",
@@ -34,7 +34,7 @@ exports.data = {
     },
 
     '3': {
-	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or have to court again on your case in the future, your case is still open.",
+	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or if you have to go to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
 	options: [
 	    {
 		answer: "No",
@@ -59,7 +59,7 @@ exports.data = {
 		next: 22,
 	    },
 	    {
-		answer: "Yes, I was presviously reistered but I am no longer on the Sex offender registry ",
+		answer: "Yes, I was presviously reistered but I am no longer on the Sex offender registry. ",
 		next: 23,
 	    },
 	]
@@ -258,7 +258,7 @@ exports.data = {
 	],
     },
     '20': {
-	question: "Certain crimes may never be sealed if they end in conviction.  Some of the more common never sealable charges are witness intimidation, resisting arrest, bribery, and certain firearms charges. If the waiting periods have been met, other charges will still be able to sealed by mail, but not these charges",
+	question: "Certain crimes may never be sealed if they end in conviction.  Some of the more common never sealable charges are witness intimidation, resisting arrest, bribery, and certain firearms charges. Other charges will still be able to be sealed by mail,if the waiting periods have been met, but not these charges.",
 	options: [
 	    {
 		answer: "I understand",
