@@ -34,7 +34,7 @@ exports.data = {
     },
 
     '3': {
-	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or if you have to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
+	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or if you have to go to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
 	options: [
 	    {
 		answer: "No",
@@ -59,7 +59,7 @@ exports.data = {
 		next: 22,
 	    },
 	    {
-		answer: "Yes, I was presviously reistered but I am no longer on the Sex offender registry ",
+		answer: "Yes, I was presviously reistered but I am no longer on the Sex offender registry. ",
 		next: 23,
 	    },
 	]
@@ -258,7 +258,7 @@ exports.data = {
 	],
     },
     '20': {
-	question: "Certain crimes may never be sealed if they end in conviction.  Some of the more common never sealable charges are witness intimidation, resisting arrest, bribery, and certain firearms charges. If the waiting periods have been met, other charges will still be able to sealed by mail, but not these charges",
+	question: "Certain crimes may never be sealed if they end in conviction.  Some of the more common never sealable charges are witness intimidation, resisting arrest, bribery, and certain firearms charges. Other charges will still be able to be sealed by mail,if the waiting periods have been met, but not these charges.",
 	options: [
 	    {
 		answer: "I understand",
