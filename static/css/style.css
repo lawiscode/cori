@@ -24,6 +24,9 @@ a {
   border: solid #000 1px;
 }
 
+.datepicker-inline {
+    margin: auto;
+}
 
 /* Custom default button */
 .btn-default,
@@ -141,6 +144,7 @@ body {
 .cover {
   padding: 0 20px;
   margin-top: 80px;
+  margin-bottom: 30px;
 }
 
   /* Handle the widths */
