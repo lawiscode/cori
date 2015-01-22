@@ -63,6 +63,10 @@
 		     var mail = false;
 
 		     function nextQuestion(id) {
+			 if (id == 'end') {
+			     calculate();
+			     return;
+			 }
 			 curId = id;
 			 $('.question').html(json[id].question);
 			 $('.options').empty();
@@ -105,7 +109,6 @@
 			 //Was there a conviction?
 			 conviction = dates['misCon'] || dates['jailMisCon'] || dates['felCon'] || dates['jailFelCon'];
 
-
 			 //Waiting period
 			 if (dates['misCon']) {
 			     dates['misCon'].setFullYear(dates['misCon'].getFullYear() + 5);
@@ -132,6 +135,12 @@
 			     }
 			 }
 
+			 if (waiting > new Date()) {
+			     nextQuestion(37);
+			     $('.question').html($('.question').html() + waiting.toDateString() );
+			     return;
+			 }
+
 			 if (!$.isEmptyObject(salientAs)) {
 			     nonConviction = true;
 			     //Was there a non conviction
@@ -139,30 +148,31 @@
 			     court = salientAs[27] == 1 || salientAs[28] == 1;
 
 			 }
-
+			 console.log(nonConviction);
 			 if (conviction && nonConviction) {
 			     if (court && mail) {
-				 nextQuestion();
+				 nextQuestion(30);
 			     }
 			     else if (court) {
-				 nextQuestion();
+				 nextQuestion(31);
 			     }
 			     else if (mail) {
-				 nextQuestion();
+				 nextQuestion(32);
 			     }
 			 }
 			 else if (conviction) {
-			     nextQuestion();
+			     console.log("Calculate");
+			     nextQuestion(33);
 			 }
 			 else if (nonConviction) {
 			     if (court && mail) {
-				 nextQuestion();
+				 nextQuestion(34);
 			     }
 			     else if (court) {
-				 nextQuestion();
+				 nextQuestion(35);
 			     }
 			     else if (mail) {
-				 nextQuestion();
+				 nextQuestion(36);
 			     }
 			 }
 
