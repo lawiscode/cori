@@ -339,5 +339,8 @@ exports.data = {
     '37': {
 	question: "You are not eligible to seal any cases at this time.  You will be eligible to seal one or more cases on ",
     },
+    '38': {
+	question: "Based on our calculations, it appears you don't have a criminal record. You may request your CORI report and see an attorney to be Certain.",
+    },
 
 }
