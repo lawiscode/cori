@@ -136,7 +136,7 @@
 			 }
 
 			 if (waiting > new Date()) {
-			     nextQuestion(37);
+			     nextQuestion(38);
 			     $('.question').html($('.question').html() + waiting.toDateString() );
 			     return;
 			 }
@@ -161,7 +161,6 @@
 			     }
 			 }
 			 else if (conviction) {
-			     console.log("Calculate");
 			     nextQuestion(33);
 			 }
 			 else if (nonConviction) {
