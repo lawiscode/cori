@@ -37,12 +37,12 @@ exports.data = {
 	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or if you have to go to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
 	options: [
 	    {
-		answer: "No",
-		next: 4,
+		answer: "Yes",
+		next: 21,
 	    },
 	    {
-		answer: "yes",
-		next: 21,
+		answer: "No",
+		next: 4,
 	    },
 	]
     },
@@ -51,12 +51,12 @@ exports.data = {
 	question: "Are you presently registered, or have you ever had to register as a sex offender?",
 	options: [
 	    {
-		answer: "No",
-		next: 5,
-	    },
-	    {
 		answer: "Yes",
 		next: 22,
+	    },
+	    {
+		answer: "No",
+		next: 5,
 	    },
 	    {
 		answer: "Yes, I was presviously reistered but I am no longer on the Sex offender registry. ",
@@ -82,13 +82,14 @@ exports.data = {
 	question: "Are the cases in Federal Court?",
 	options: [
 	    {
-		answer: "No",
-		next: 7,
-	    },
-	    {
 		answer: "Yes",
 		next: 26,
 	    },
+	    {
+		answer: "No",
+		next: 7,
+	    },
+
 	]
     },
 
