@@ -1,6 +1,6 @@
 exports.data = {
     '0': {
-	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process, a FREE and SIMPLE form you will mail-in. Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
+	question: "This calculator is for the sealing of Massachusetts cases that are eligible for sealing through the administrative process, a FREE and SIMPLE form you will mail-in. Non-convictions may also be eligible for sealing by a judge.  Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org/'>Mass. Legal help</a> to learn about your options for sealing non-convictions and for more information about sealing records. This informational calculator is provided as a public service and does not constitute legal advice which can only be given to you after a consultation with your own attorney.",
 	options: [
 	    {
 		answer: "I understand",
@@ -10,7 +10,7 @@ exports.data = {
     },
 
     '1': {
-	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 16, 2013. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal access form</a> and to waive the fee, <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of indigency</a> ",
+	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 23, 2015. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal access form</a> and to waive the fee, <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of indigency</a> ",
 	options: [
 	    {
 		answer: "Continue",
@@ -268,10 +268,10 @@ exports.data = {
 	]
     },
     '21': {
-	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A. Please check back after your open cases have closed. You can also visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> ",
+	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A. Please check back after your open cases have closed. You can also visit <a style='color:#597C9C' href='http://www.masslegalhelp.org'>Mass. Legal help  for more information</a> ",
     },
     '22': {
-	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A.",
+	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A while you are in the sex offender registry.  Learn more about this at Masslegahelp.org by <a style='color:#597C9C' href='http://www.masslegalhelp.org/cori/your-rights'>reviewing the Know Your CORI Rights Booklet</a>.",
     },
     '23': {
 	question: "Sealing records for people who were previously on the sex offender registry may be more complicated than other types of sealing. Please visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> or contact an attorney",
