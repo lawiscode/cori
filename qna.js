@@ -232,7 +232,7 @@ exports.data = {
 	]
     },
     '18': {
-	question: "Do you have any felony cases that ended in non-convictions?",
+	question: "Do you have any felony cases that ended in a nonconviction: dismissal, a not guilty finding or a nolle prosequi (the district attorney dropped the case)?",
 	options: [
 	    {
 		answer: "Yes",
@@ -246,7 +246,7 @@ exports.data = {
     },
 
     '19': {
-	question: "Do you have any misdemeanor cases that ended in non-convictions?",
+	question: "Do you have any misdemeanor cases that ended in a nonconviction: dismissal, a not guilty finding or a nolle prosequi (the district attorney dropped the case)?",
 	options: [
 	    {
 		answer: "Yes",
@@ -286,7 +286,7 @@ exports.data = {
 	question: "The administrative process under Mass. Gen. Law Chapter 276, Section 100A does not include sealing of federal court cases",
     },
     '27': {
-	question: "Did you have any felony cases that ended in Non-convictions more than 10 years ago",
+	question: "Did you have any felony cases that ended in non-convictions more than 10 years ago",
 	options: [
 	    {
 		answer: "Yes",
@@ -300,7 +300,7 @@ exports.data = {
 	]
     },
     '28': {
-	question: "Did you have any misdemeanor cases that ended in Non-convictions more than 5 years ago",
+	question: "Did you have any misdemeanor cases that ended in non-convictions more than 5 years ago",
 	options: [
 	    {
 		answer: "Yes",
@@ -320,7 +320,7 @@ exports.data = {
 	question: "Based on our calculations, it appears you may be eligible to seal convictions and non-convictions by MAIL.  It depends on the totality of your record, including any possible never sealable convictions.  You should <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/probation/sealingpetition.pdf'>submit a request to seal by mail</a> and mail it to the address at the top of the form.  In additions, it appears that you are eligible to seal some non-convictions without a waiting period. Please visit the clerk's office in the courthouse where the charges originated to file a petition, and visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> to get information on sealing with a hearing in front a judge. <br> <br> We always strongly suggest obtaining certified copies of the docket sheets, complaints, and police reports for all cases you are trying to seal because you may need them in the future.  Once you seal, you will not be able to see your files again without a difficult process, even though they are yours. <br> Filling out this questionnaire and submitting the official request to seal your cases by mail DOES NOT MEAN you cases have been sealed. After mailing the request to seal by mail, you will receive a notice from the Commissioner of Probation listing your cases that have been sealed and your cases that have not been sealed. ONLY AFTER receiving the notice, should you expect that your cases have been sealed.  ",
     },
     '31': {
-	question: "Based on our calculations, it appears you may be eligible to seal convictions by MAIL.  It depends on the totality of your record, including any possible never sealable convictions.  You should <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/probation/sealingpetition.pdf'>submit a request to seal by mail</a> and mail it to the address at the top of the form.  In addition, it appears that you are eligible to seal some non-convictions without a waiting period. Please visit the clerk's office in the courthouse where the charges originated to file a petition, and visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> to get information on sealing with a hearing in front a judge. <br> <br> We always strongly suggest obtaining certified copies of the docket sheets, complaints, and police reports for all cases you are trying to seal because you may need them in the future.  Once you seal, you will not be able to see your files again without a difficult process, even though they are yours. <br> <br> <br> Filling out this questionnaire and submitting the official request to seal your cases by mail DOES NOT MEAN you cases have been sealed.  After mailing the request to seal by mail, you will receive a notice from the Commissioner of Probation listing your cases that have been sealed and your cases that have not been sealed. ONLY AFTER receiving the notice, should you expect that your cases have been sealed.  ",
+	question: "Based on our calculations, it appears you may be eligible to seal one or more casesby MAIL.  It depends on the totality of your record, including any possible never sealable convictions.  You should <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/probation/sealingpetition.pdf'>submit a request to seal by mail</a> and mail it to the address at the top of the form.  In addition, it appears that you are eligible to seal some non-convictions without a waiting period. Please visit the clerk's office in the courthouse where the charges originated to file a petition, and visit <a style='color:#597C9C' href='http://www.masslegalhelp.org for more information'>Mass. Legal help</a> to get information on sealing with a hearing in front a judge. <br> <br> We always strongly suggest obtaining certified copies of the docket sheets, complaints, and police reports for all cases you are trying to seal because you may need them in the future.  Once you seal, you will not be able to see your files again without a difficult process, even though they are yours. <br> <br> <br> Filling out this questionnaire and submitting the official request to seal your cases by mail DOES NOT MEAN you cases have been sealed.  After mailing the request to seal by mail, you will receive a notice from the Commissioner of Probation listing your cases that have been sealed and your cases that have not been sealed. ONLY AFTER receiving the notice, should you expect that your cases have been sealed.  ",
     },
     '32': {
 	question: "Based on our calculations, it appears you may be eligible to seal all convictions and at least some non-convictions.  It depends on the totality of your record, including any possible never sealable convictions.  You should fill out a request to seal by mail <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/probation/sealingpetition.pdf'>submit a request to seal by mail</a> and mail it to the address at the top of the form. We always strongly suggest obtaining certified copies of the docket sheets, complaints, and police reports for all cases you are trying to seal because you may need them in the future.  Once you seal, you will not be able to see your files again without a difficult process, even though they are yours. <br> <br> <br> Filling out this questionnaire and submitting the official request to seal your cases by mail DOES NOT MEAN your cases have been sealed.  After mailing the request to seal by mail, you will receive a notice from the Commissioner of Probation listing your cases that have been sealed and your cases that have not been sealed. ONLY AFTER receiving the notice, should you expect that your cases have been sealed.",
@@ -338,7 +338,7 @@ exports.data = {
 	question: "Based on our calculations, it appears you may be eligible to seal at least some non-convictions.  It depends on the totality of your record. You should <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/probation/sealingpetition.pdf'>submit a request to seal by mail</a> and mail it to the address at the top of the form.  We always strongly suggest obtaining certified copies of the docket sheets, complaints, and police reports for all cases you are trying to seal because you may need them in the future.  Once you seal, you will not be able to see your files again without a difficult process, even though they are yours. <br> <br> Please remember, sealed records may still be viewed by law enforcement and certain other personnel.  Sealing your state record does not seal your federal record, so if you are applying for a federal job such as the Post Office or the Veteran’s Administration, they are likely to run a fingerprint check and will still be able to see sealed cases. <br> <br> <br> Filling out this questionnaire and submitting the official request to seal your cases by mail DOES NOT MEAN you cases have been sealed.  After mailing the request to seal by mail, you will receive a notice from the Commissioner of Probation listing your cases that have been sealed and your cases that have not been sealed. ONLY AFTER receiving the notice, should you expect that your cases have been sealed.",
     },
     '37': {
-	question: "It appears you may not be eligible to seal any charges by mail at this time. You may be eligible to seal one or more cases on ",
+	question: "It appears you may not be eligible to seal any charges by mail at this time. You may be eligible to seal one or more cases by MAIL on ",
     },
     '38': {
 	question: "Based on our calculations, it appears you don't have a criminal record. You may request your CORI report and see an attorney to be Certain.",
