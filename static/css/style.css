@@ -24,7 +24,7 @@ a {
   border: solid #000 1px;
 }
 
-.datepicker-inline {
+.datepicker-inline, .table-condensed {
     margin: auto;
 }
 
