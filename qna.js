@@ -10,7 +10,7 @@ exports.data = {
     },
 
     '1': {
-	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 23, 2015. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal access form</a> and to waive the fee, <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of indigency</a> ",
+	question: "This information relates only to Massachusetts state court criminal records and Massachusetts laws in effect or passed on or before January 23, 2015. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal Access Form</a> and to waive the fee, <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of Indigency</a> ",
 	options: [
 	    {
 		answer: "Continue",
@@ -34,7 +34,7 @@ exports.data = {
     },
 
     '3': {
-	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines,or other court ordered costs to pay, or if you have to go to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
+	question: "Do you have any criminal cases that are open or pending? If you are on probation, parole, have fines, or other court ordered costs to pay, or if you have to go to court again on your case in the future, your case is still open. It is a good idea to obtain a copy of your CORI Report which contains precise information about your criminal cases.",
 	options: [
 	    {
 		answer: "Yes",
@@ -268,7 +268,7 @@ exports.data = {
 	]
     },
     '21': {
-	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A. Please check back after your open cases have closed. You can also visit <a style='color:#597C9C' href='http://www.masslegalhelp.org'>Mass. Legal help  for more information</a> ",
+	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A. Please check back after your open cases have closed. You are advised to obtain an official copy of your CORI Report which contains precise details of your criminal cases. You can request your CORI Report using these forms: <a style='color:#597C9C' href='http://www.mass.gov/eopss/docs/chsb/personal-access-form-v2-20121228.pdf'>Personal Access Form</a> and to waive the fee, <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/forms/sjc/affidavitofindigency.pdf'>Affidavit of Indigency</a> You can also visit <a style='color:#597C9C' href='http://www.masslegalhelp.org'>Mass. Legal help  for more information</a> ",
     },
     '22': {
 	question: "You are not eligible to seal any convictions in Massachusetts and other cases using the administrative process under Mass.Gen/law Chapter 276, Section 100A while you are in the sex offender registry.  Learn more about this at Masslegahelp.org by <a style='color:#597C9C' href='http://www.masslegalhelp.org/cori/your-rights'>reviewing the Know Your CORI Rights Booklet</a>.",
