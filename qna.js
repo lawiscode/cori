@@ -94,7 +94,7 @@ exports.data = {
     },
 
     '7': {
-	question: "Do you have any <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/admin/sentcomm/mastercrimelist.pdf' target='_blank'>felony convictions</a>"?,
+	question: "Do you have any <a style='color:#597C9C' href='http://www.mass.gov/courts/docs/admin/sentcomm/mastercrimelist.pdf' target='_blank'>felony convictions</a>?",
 	options: [
 	    {
 		answer: "Yes",
