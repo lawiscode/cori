@@ -109,23 +109,27 @@
 
 			 //Waiting period
 			 if (dates['misCon']) {
-			     if (dates['misCon'].getFullYear() + 5 > waiting) {
-				 waiting = dates['misCon'] + 5;
+			     if (dates['misCon'].setFullYear(dates['misCon'].getFullYear() + 5) > waiting) {
+				 waiting = new Date(dates['misCon'].valueOf());
+				 dates['misCon'].setFullYear(dates['misCon'].getFullYear() - 5);
 			     }
-			     c			 }
+			 }
 			 if (dates['felCon']) {
-			     if (dates['felCon'].getFullYear() + 10 > waiting) {
-				 waiting = dates['felCon'] + 10;
+			     if (dates['felCon'].setFullYear(dates['felCon'].getFullYear() + 10) > waiting)  {
+				 waiting = new Date(dates['felCon'].valueOf());
+				 dates['felCon'].setFullYear(dates['felCon'].getFullYear() - 10);
 			     }
 			 }
 			 if (dates['jailMisCon']) {
-			     if (dates['jailMisCon'].getFullYear() + 5 > waiting) {
-				 waiting = dates['jailMisCon'] + 5;
+			     if (dates['jailMisCon'].setFullYear(dates['jailMisCon'].getFullYear() + 5) > waiting)  {
+				 waiting = new Date(dates['jailMisCon'].valueOf());
+				 dates['jailMisCon'].setFullYear(dates['jailMisCon'].getFullYear() - 5);
 			     }
 			 }
 			 if (dates['jailFelCon']) {
-			     if (dates['jailFelCon'].getFullYear() + 10 > waiting) {
-				 waiting = dates['jailFelCon'] + 10;
+			     if (dates['jailFelCon'].setFullYear(dates['jailFelCon'].getFullYear() + 10) > waiting)  {
+				 waiting = new Date(dates['jailFelCon'].valueOf());
+				 dates['jailFelCon'].setFullYear(dates['jailFelCon'].getFullYear() - 10);
 			     }
 			 }
 
@@ -219,6 +223,8 @@
 			     conviction = false;
 			     mail = false;
 			     court = false;
+			     waiting = new Date(1900, 0, 0);
+
 			     nextQuestion(hist[hist.length-1]);
 			     if (curDate != "") {
 				 dates[curDate] = undefined;
