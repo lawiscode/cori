@@ -73,7 +73,7 @@
 			 if (json[id].date) {
 			     curDate = json[id].date;
 			     //for back button.
-					    dates[curDate] = undefined;
+					       dates[curDate] = undefined;
 			     $('.datepicker').show();
 			     $('.options').append('<a class="btn" href="#" style="display:none" data-id="' + json[id].options[0].next + '">' + json[id].options[0].answer + '</a>');
 			 }
@@ -109,27 +109,23 @@
 
 			 //Waiting period
 			 if (dates['misCon']) {
-			     dates['misCon'].setFullYear(dates['misCon'].getFullYear() + 5);
-			     if (dates['misCon'] > waiting) {
-				 waiting = dates['misCon'];
+			     if (dates['misCon'].getFullYear() + 5 > waiting) {
+				 waiting = dates['misCon'] + 5;
 			     }
-			 }
+			     c			 }
 			 if (dates['felCon']) {
-			     dates['felCon'].setFullYear(dates['felCon'].getFullYear() + 10);
-			     if (dates['felCon'] > waiting) {
-				 waiting = dates['felCon'];
+			     if (dates['felCon'].getFullYear() + 10 > waiting) {
+				 waiting = dates['felCon'] + 10;
 			     }
 			 }
 			 if (dates['jailMisCon']) {
-			     dates['jailMisCon'].setFullYear(dates['jailMisCon'].getFullYear() + 5);
-			     if (dates['jailMisCon'] > waiting) {
-				 waiting = dates['jailMisCon'];
+			     if (dates['jailMisCon'].getFullYear() + 5 > waiting) {
+				 waiting = dates['jailMisCon'] + 5;
 			     }
 			 }
 			 if (dates['jailFelCon']) {
-			     dates['jailFelCon'].setFullYear(dates['jailFelCon'].getFullYear() + 10);
-			     if (dates['jailFelCon'] > waiting) {
-				 waiting = dates['jailFelCon'];
+			     if (dates['jailFelCon'].getFullYear() + 10 > waiting) {
+				 waiting = dates['jailFelCon'] + 10;
 			     }
 			 }
 
@@ -139,12 +135,13 @@
 			     return;
 			 }
 
-			 if (!$.isEmptyObject(salientAs)) {
-			     nonConviction = true;
-			     //Was there a non conviction
-			     mail = salientAs[27] == 0 || salientAs[28] == 0;
-			     court = salientAs[27] == 1 || salientAs[28] == 1;
-
+			 for (var key in salientAs) {
+			     if (salientAs['key'] != undefined) {
+				 nonConviction = true;
+				 //Was there a non conviction
+				 mail = salientAs[27] == 0 || salientAs[28] == 0;
+				 court = salientAs[27] == 1 || salientAs[28] == 1;
+			     }
 			 }
 			 console.log(nonConviction);
 			 if (conviction && nonConviction) {
@@ -182,7 +179,7 @@
 		     //Store answer to importat calculations that would be used in
 		     //eligibility question
 		     function getAnswer(ans) {
-			 //console.log(curId);
+			 console.log(ans);
 			 //If called without an answer, delete any possible previous value
 			 if (ans == undefined && $.inArray(curId, salientQs) > -1) {
 			     salientAs[curId] = undefined;
@@ -191,6 +188,7 @@
 
 			 //If called with an ans and id belongs to salientQs, store answer
 			 if ($.inArray(curId, salientQs) > -1) {
+			     console.log(curId);
 			     salientAs[curId] = ans;
 			 }
 		     }
@@ -217,6 +215,10 @@
 			 $('#back').on('click', function(e) {
 			     e.preventDefault();
 			     hist.pop();
+			     nonConviction = false;
+			     conviction = false;
+			     mail = false;
+			     court = false;
 			     nextQuestion(hist[hist.length-1]);
 			     if (curDate != "") {
 				 dates[curDate] = undefined;
